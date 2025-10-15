@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ category.name }} Quizzes</h2>
+<p>{{ category.description }}</p>
+
+<div class="row mt-4">
+    {% for quiz in quizzes %}
+    <div class="col-md-4 mb-3">
+        <div class="card p-3 text-center shadow">
+            <h5>{{ quiz.title }}</h5>
+            <a href="{% url 'start_quiz' quiz.id %}" class="btn btn-primary">Start Quiz</a>
+        </div>
+    </div>
+    {% empty %}
+    <p>No quizzes available in this category yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

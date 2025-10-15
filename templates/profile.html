@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h2>{{ user_name }}'s Profile</h2>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Quiz History</h4>
+            <p>Here are the results of the quizzes you have taken.</p>
+
+            {% if scores %}
+                <table class="table table-hover mt-4">
+                    <thead>
+                        <tr>
+                            <th>Quiz Title</th>
+                            <th>Your Score</th>
+                            <th>Date Taken</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for score in scores %}
+                        <tr>
+                            <td>{{ score.title }}</td>
+                            <td>{{ score.score }}</td>
+                           
+                            <td>{{ score.taken_on|date:"d M Y, h:i A" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-info mt-4">
+                    You haven't taken any quizzes yet. <a href="{% url 'user_dashboard' %}" class="alert-link">Start a quiz</a> to see your history!
+                </div>
+            {% endif %}
+        </div>
+        <div class="card-footer text-center">
+            <a href="{% url 'user_dashboard' %}" class="btn btn-primary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

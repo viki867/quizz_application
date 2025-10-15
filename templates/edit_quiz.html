@@ -1,0 +1,30 @@
+<!-- templates/edit_quiz.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Edit Quiz</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label>Title</label>
+            <input type="text" class="form-control" name="title" value="{{ quiz.title }}" required>
+        </div>
+        <div class="mb-3">
+            <label>Category</label>
+            <select class="form-control" name="category_id" required>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == quiz.category_id %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label>Time Limit (in minutes)</label>
+            <input type="number" class="form-control" name="time_limit" value="{{ quiz.time_limit_minutes }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Quiz</button>
+        <a href="{% url 'view_quizzes' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

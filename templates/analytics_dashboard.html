@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Analytics Dashboard</h2>
+    <p>Insights into your quiz application's performance.</p>
+
+    <div class="row mt-4">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">Most Popular Quizzes</div>
+                <ul class="list-group list-group-flush">
+                    {% for quiz in popular_quizzes %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ quiz.title }}
+                            <span class="badge bg-primary rounded-pill">{{ quiz.attempts }} attempts</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+       
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">Top High Scores</div>
+                <ul class="list-group list-group-flush">
+                    {% for score in top_scores %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ score.user_name }} on "{{ score.quiz_title }}"
+                            <span class="badge bg-success rounded-pill">{{ score.score }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+     
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">Hardest Quizzes (Lowest Average Score)</div>
+                <ul class="list-group list-group-flush">
+                    {% for quiz in hardest_quizzes %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ quiz.title }}
+                            <span class="badge bg-warning text-dark rounded-pill">Avg: {{ quiz.avg_score|floatformat:2 }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+       
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">Most Active Users</div>
+                <ul class="list-group list-group-flush">
+                    {% for user in active_users %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ user.name }}
+                            <span class="badge bg-info text-dark rounded-pill">{{ user.quizzes_taken }} quizzes taken</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

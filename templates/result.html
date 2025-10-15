@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card text-center">
+        <div class="card-header">
+            <h2>Quiz Result</h2>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">You scored</h5>
+            <h1>{{ score }} out of {{ total_questions }}</h1>
+        </div>
+    </div>
+
+  
+    <div class="mt-5">
+        <h3>Review Your Answers</h3>
+        <hr>
+        {% for item in review_data %}
+           
+            {% if item.is_correct %}
+                <div class="card mb-3 border-success">
+            {% else %}
+                <div class="card mb-3 border-danger">
+            {% endif %}
+                <div class="card-header">
+                    <p class="fw-bold">{{ forloop.counter }}. {{ item.question_text }}</p>
+                </div>
+                <div class="card-body">
+                    <p>Your Answer: {{ item.user_answer }}</p>
+                    
+                    
+                    {% if not item.is_correct %}
+                        <p class="text-success fw-bold">Correct Answer: {{ item.correct_answer }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'user_dashboard' %}" class="btn btn-primary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

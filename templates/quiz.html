@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between">
+        <h2>{{ quiz.title }}</h2>
+    
+        <h3 id="timer" class="text-danger"></h3>
+    </div>
+    <hr>
+ 
+    <form method="POST" id="quizForm">
+        {% csrf_token %}
+        {% for q in questions %}
+        <div class="card mb-3">
+            <div class="card-header">
+                <p class="fw-bold">{{ forloop.counter }}. {{ q.question_text }}</p>
+            </div>
+            <div class="card-body">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="q{{ q.id }}" value="{{ q.option1 }}" required>
+                    <label class="form-check-label">{{ q.option1 }}</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="q{{ q.id }}" value="{{ q.option2 }}">
+                    <label class="form-check-label">{{ q.option2 }}</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="q{{ q.id }}" value="{{ q.option3 }}">
+                    <label class="form-check-label">{{ q.option3 }}</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="q{{ q.id }}" value="{{ q.option4 }}">
+                    <label class="form-check-label">{{ q.option4 }}</label>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary">Submit Quiz</button>
+        </div>
+    </form>
+</div>
+
+
+<script>
+  
+    const timeLimitMinutes = {{ quiz.time_limit_minutes }};
+
+   
+    let timeInSeconds = timeLimitMinutes * 60;
+    
+    const timerElement = document.getElementById('timer');
+    const quizForm = document.getElementById('quizForm');
+
+   
+    const countdown = setInterval(function() {
+  
+        if (timeInSeconds <= 0) {
+            clearInterval(countdown);
+            timerElement.innerHTML = "Time's Up!";
+            alert("நேரம் முடிந்தது! உங்கள் பதில்கள் தானாக சமர்ப்பிக்கப்படும்.");
+            quizForm.submit(); 
+        } else {
+          
+            const minutes = Math.floor(timeInSeconds / 60);
+            let seconds = timeInSeconds % 60;
+
+     
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            timerElement.innerHTML = `${minutes}:${seconds}`;
+            
+         
+            timeInSeconds--;
+        }
+    }, 1000); 
+</script>
+
+{% endblock %}

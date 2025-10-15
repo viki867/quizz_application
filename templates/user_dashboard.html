@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Welcome, {{ user_name }}!</h2> <!-- இந்த புதிய இணைப்பைச் சேர்க்கவும் -->
+        <a href="{% url 'user_profile' %}" class="btn btn-outline-primary">View My Profile</a>
+    </div>
+    
+    <p class="lead">Select a category to start a quiz.</p>
+    <hr>
+    
+    <div class="row">
+        {% for category in categories %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ category.name }}</h5>
+                    <p class="card-text">{{ category.description }}</p>
+                    <a href="{% url 'category_quiz' category.id %}" class="btn btn-primary">View Quizzes</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

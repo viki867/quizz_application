@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container text-center mt-5">
+   <h1 class="fw-bold text-light">Welcome to the Online Quiz Generator!</h1>
+    <p class="lead text-white-50">Challenge yourself with fun and interactive quizzes!</p>
+
+    <!-- Round Quiz Image -->
+    <img src="{% static 'images/quiz.jpg' %}" 
+         alt="Online Quiz" 
+         class="img-fluid mt-4 rounded-circle shadow" 
+         style="width: 200px; height: 200px; object-fit: cover; border: 4px solid #0d6efd;">
+
+    <!-- Extra Paragraph -->
+    <div class="mt-4 px-4">
+        <p class="fs-5 text-secondary">
+            Our Online Quiz Generator helps you test your knowledge across various subjects. 
+            Compete with friends or improve your skills — it’s quick, fun, and easy to use!
+        </p>
+    </div>
+
+    <!-- Instruction Cards -->
+    <div class="row justify-content-center mt-5">
+        <!-- Step 1 -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-primary mb-4" style="border-radius: 15px;">
+                <div class="card-body">
+                    <h5 class="card-title text-primary fw-bold">Step 1</h5>
+                    <p class="card-text">Create your account or log in to get started with quizzes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-success mb-4" style="border-radius: 15px;">
+                <div class="card-body">
+                    <h5 class="card-title text-success fw-bold">Step 2</h5>
+                    <p class="card-text">Choose your quiz category and difficulty level.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-warning mb-4" style="border-radius: 15px;">
+                <div class="card-body">
+                    <h5 class="card-title text-warning fw-bold">Step 3</h5>
+                    <p class="card-text">Answer questions, submit, and view your results instantly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    {% if not request.session.user_name and not request.session.admin %}
+    <div class="mt-4">
+        <a href="{% url 'signup' %}" class="btn btn-primary mx-2 px-4 py-2">Signup</a>
+        <a href="{% url 'user_login' %}" class="btn btn-success mx-2 px-4 py-2">Login</a>
+        <a href="{% url 'admin_login' %}" class="btn btn-warning mx-2 px-4 py-2 text-white">Admin Login</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

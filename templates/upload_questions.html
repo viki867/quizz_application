@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Upload Questions for "{{ quiz.title }}"</h2>
+    <p>Upload a CSV file with questions for this quiz.</p>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <div class="alert alert-info">
+        <strong>Instructions:</strong>
+        <ul>
+            <li>Your CSV file must not have a header row.</li>
+            <li>Each row must contain exactly 6 columns in this order:</li>
+            <li><code>question_text, option1, option2, option3, option4, correct_answer</code></li>
+        </ul>
+    </div>
+
+   
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="csv_file" class="form-label">Select CSV File</label>
+            <input class="form-control" type="file" name="csv_file" accept=".csv" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload Questions</button>
+        <a href="{% url 'view_quizzes' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
